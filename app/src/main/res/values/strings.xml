@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LoginAndRegistration</string>
+    <string name="register_here">Register here</string>
+    <string name="register_an_account">Register An Account</string>
 </resources>
