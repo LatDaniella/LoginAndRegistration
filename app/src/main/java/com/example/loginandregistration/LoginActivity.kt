@@ -1,8 +1,12 @@
 package com.example.loginandregistration
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.loginandregistration.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -14,6 +18,24 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         val EXTRA_USERNAME = "username"
         val EXTRA_PASSWORD = "password"
+    }
+
+    // starting an activity for a result
+    // Step 1: Register the Activity with a contract
+    val startRegistrationForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+    { result: ActivityResult ->
+        // decide what to do if the result is ok (if it was successful)
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            // Handle the Intent
+            // note: editTexts are different from textViews in that you have to call setText
+            binding.editTextLoginUsername.setText(intent?.getStringExtra(EXTRA_USERNAME))
+            binding.editTextLoginPassword.setText(intent?.getStringExtra(EXTRA_PASSWORD))
+        }
+        // decide what to do if it was unsuccessful with a RESULT_CANCELED
+        if(result.resultCode == Activity.RESULT_CANCELED) {
+            Toast.makeText(this, "Registration Canceled", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +63,11 @@ class LoginActivity : AppCompatActivity() {
             }
 
             // 3. launch the activity
-            startActivity(registrationIntent)
+//            startActivity(registrationIntent)
+
+            // 3b. Alternate: Could launch the activity for a result instead
+            // use the variable from the register for the result contract above
+            startRegistrationForResult.launch(registrationIntent)
 
 
         }
