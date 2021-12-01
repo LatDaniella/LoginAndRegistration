@@ -34,14 +34,13 @@ class RegistrationActivity : AppCompatActivity() {
                 putExtra(LoginActivity.EXTRA_PASSWORD,
                     binding.editTextRegistrationPassword.text.toString())
             }
-            if(username.equals(null) || password.equals(null)) {
-                setResult(Activity.RESULT_CANCELED, returnToLoginIntent)
-
-            }
-            else {
-
-                setResult(Activity.RESULT_OK, returnToLoginIntent)
-                finish() //closes the activity
+            if (password != null && username != null) {
+                if(username.isEmpty() || password.isEmpty()) {
+                    setResult(Activity.RESULT_CANCELED, returnToLoginIntent)
+                } else {
+                    setResult(Activity.RESULT_OK, returnToLoginIntent)
+                    finish() //closes the activity
+                }
             }
         }
 
