@@ -30,20 +30,26 @@ class RegistrationUtilTest {
     // Once all the test are made, implement the validatePassword function in the Util class
 
     @Test
-    fun validatePassword_sevenCharacters_returnFalse() {
-        val result = RegistrationUtil.validatePassword("dfu5Yjk","dfu5Yjk")
+    fun validatePassword_lengthUnderEight_returnFalse() {
+        val result = RegistrationUtil.validatePassword("1Abcdef","1Abcdef")
         assertThat(result).isFalse()
     }
 
     @Test
-    fun validatePassword_eightCharacters_returnFalse() {
-        val result = RegistrationUtil.validatePassword("dfu5Yjk","dfu5Yjk")
+    fun validatePassword_withoutDigits_returnFalse() {
+        val result = RegistrationUtil.validatePassword("Abcdefgh","Abcdefgh")
+        assertThat(result).isFalse()
+    }
+
+    @Test
+    fun validatePassword_withoutCapitalLetter_returnFalse() {
+        val result = RegistrationUtil.validatePassword("abcdefgh","abcdefgh")
         assertThat(result).isFalse()
     }
 
     @Test
     fun validatePassword_goodMatchingPassword_returnTrue() {
-        val result = RegistrationUtil.validatePassword("dfu5YjkO","dfu5YjkO")
+        val result = RegistrationUtil.validatePassword("1Abcdefg","1Abcdefg")
         assertThat(result).isTrue()
     }
 }
